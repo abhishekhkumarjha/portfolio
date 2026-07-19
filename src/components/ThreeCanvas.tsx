@@ -240,7 +240,15 @@ export default function ThreeCanvas({
     scene.add(projGroup);
 
     const projMeshes: THREE.Group[] = [];
-    const projColors = [0xffd166, 0xff6f59, 0xca8a04, 0xf4f1de]; // Gold, Terracotta, Brass, Champagne
+    const projColors = [0xffd166, 0xff6f59, 0x60a5fa, 0x34d399, 0xc084fc, 0x22d3ee]; // Yellow, Terracotta, Blue, Emerald, Purple, Cyan
+
+    // Dynamic positioning helper for 6 projects
+    const getProjPos = (idx: number) => {
+      const x = -3.75 + idx * 1.5;
+      const y = idx % 2 === 0 ? 1.5 : -1.8;
+      const z = idx % 2 === 0 ? -2 : -1.8;
+      return new THREE.Vector3(x, y, z);
+    };
 
     // Project 1 Shape: Compliance Checker - Document scroll mesh
     const proj1Group = new THREE.Group();
@@ -254,7 +262,7 @@ export default function ThreeCanvas({
       })
     );
     proj1Group.add(docGrid);
-    proj1Group.position.set(-3.5, 1.5, -2);
+    proj1Group.position.copy(getProjPos(0));
     projGroup.add(proj1Group);
     projMeshes.push(proj1Group);
 
@@ -280,56 +288,85 @@ export default function ThreeCanvas({
     );
     proj2Group.add(brainMesh);
     proj2Group.add(shieldMesh);
-    proj2Group.position.set(-1.2, -1.8, -1.8);
+    proj2Group.position.copy(getProjPos(1));
     projGroup.add(proj2Group);
     projMeshes.push(proj2Group);
 
-    // Project 3 Shape: Antigena Cyber Defense - Hyper nodal grid network
+    // Project 3 Shape: Hollow Socks - Torus / ring of points (sock loop shape)
     const proj3Group = new THREE.Group();
-    const centralSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(0.3, 16, 16),
-      new THREE.MeshStandardMaterial({ color: projColors[2], emissive: projColors[2], emissiveIntensity: 0.3 })
+    const torusMesh = new THREE.Mesh(
+      new THREE.TorusGeometry(0.55, 0.22, 8, 24),
+      new THREE.MeshStandardMaterial({
+        color: projColors[2],
+        wireframe: true,
+        emissive: projColors[2],
+        emissiveIntensity: 0.5,
+      })
     );
-    proj3Group.add(centralSphere);
-    // Add minor sat spheres orbiting it
-    for (let s = 0; s < 5; s++) {
-      const sat = new THREE.Mesh(
-        new THREE.DodecahedronGeometry(0.12),
-        new THREE.MeshStandardMaterial({ color: projColors[2], emissive: projColors[2] })
-      );
-      const angle = (s / 5) * Math.PI * 2;
-      sat.position.set(Math.cos(angle) * 0.75, Math.sin(angle) * 0.75, (Math.random() - 0.5) * 0.3);
-      proj3Group.add(sat);
-    }
-    proj3Group.position.set(1.2, -1.8, -1.8);
+    proj3Group.add(torusMesh);
+    proj3Group.position.copy(getProjPos(2));
     projGroup.add(proj3Group);
     projMeshes.push(proj3Group);
 
-    // Project 4 Shape: OceanGuardian - Planet sphere with disaster pulse waves
+    // Project 4 Shape: PlumPlay UK - Cone / double helix structure
     const proj4Group = new THREE.Group();
-    const globe = new THREE.Mesh(
-      new THREE.SphereGeometry(0.6, 16, 16),
+    const coneMesh = new THREE.Mesh(
+      new THREE.ConeGeometry(0.55, 1.1, 8, 4, true),
       new THREE.MeshStandardMaterial({
         color: projColors[3],
         wireframe: true,
         emissive: projColors[3],
-        emissiveIntensity: 0.4,
+        emissiveIntensity: 0.5,
       })
     );
-    const orbitRing1 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.85, 0.02, 8, 32),
-      new THREE.MeshBasicMaterial({ color: projColors[3], transparent: true, opacity: 0.5 })
-    );
-    const orbitRing2 = new THREE.Mesh(
-      new THREE.TorusGeometry(1.0, 0.01, 8, 32),
-      new THREE.MeshBasicMaterial({ color: projColors[3], transparent: true, opacity: 0.3 })
-    );
-    orbitRing1.rotation.x = Math.PI / 3;
-    orbitRing2.rotation.y = Math.PI / 4;
-    proj4Group.add(globe, orbitRing1, orbitRing2);
-    proj4Group.position.set(3.5, 1.5, -2);
+    proj4Group.add(coneMesh);
+    proj4Group.position.copy(getProjPos(3));
     projGroup.add(proj4Group);
     projMeshes.push(proj4Group);
+
+    // Project 5 Shape: Dash into Learning - Dodecahedron with outer ring
+    const proj5Group = new THREE.Group();
+    const dodecaMesh = new THREE.Mesh(
+      new THREE.DodecahedronGeometry(0.55),
+      new THREE.MeshStandardMaterial({
+        color: projColors[4],
+        wireframe: true,
+        emissive: projColors[4],
+        emissiveIntensity: 0.5,
+      })
+    );
+    const ringMesh5 = new THREE.Mesh(
+      new THREE.TorusGeometry(0.8, 0.015, 8, 32),
+      new THREE.MeshBasicMaterial({ color: projColors[4], transparent: true, opacity: 0.4 })
+    );
+    proj5Group.add(dodecaMesh);
+    proj5Group.add(ringMesh5);
+    proj5Group.position.copy(getProjPos(4));
+    projGroup.add(proj5Group);
+    projMeshes.push(proj5Group);
+
+    // Project 6 Shape: Vitamin H2 - Sphere with horizontal rings
+    const proj6Group = new THREE.Group();
+    const sphereMesh6 = new THREE.Mesh(
+      new THREE.SphereGeometry(0.55, 12, 12),
+      new THREE.MeshStandardMaterial({
+        color: projColors[5],
+        wireframe: true,
+        emissive: projColors[5],
+        emissiveIntensity: 0.5,
+      })
+    );
+    const ringMesh6 = new THREE.Mesh(
+      new THREE.TorusGeometry(0.75, 0.015, 8, 32),
+      new THREE.MeshBasicMaterial({ color: projColors[5], transparent: true, opacity: 0.4 })
+    );
+    ringMesh6.rotation.x = Math.PI / 2;
+    proj6Group.add(sphereMesh6);
+    proj6Group.add(ringMesh6);
+    proj6Group.position.copy(getProjPos(5));
+    projGroup.add(proj6Group);
+    projMeshes.push(proj6Group);
+
 
     // Handle Resize strictly using ResizeObserver
     const resizeObserver = new ResizeObserver((entries) => {
@@ -634,14 +671,18 @@ export default function ThreeCanvas({
       (brainMesh.material as THREE.Material).dispose();
       shieldMesh.geometry.dispose();
       (shieldMesh.material as THREE.Material).dispose();
-      centralSphere.geometry.dispose();
-      (centralSphere.material as THREE.Material).dispose();
-      globe.geometry.dispose();
-      (globe.material as THREE.Material).dispose();
-      orbitRing1.geometry.dispose();
-      (orbitRing1.material as THREE.Material).dispose();
-      orbitRing2.geometry.dispose();
-      (orbitRing2.material as THREE.Material).dispose();
+      torusMesh.geometry.dispose();
+      (torusMesh.material as THREE.Material).dispose();
+      coneMesh.geometry.dispose();
+      (coneMesh.material as THREE.Material).dispose();
+      dodecaMesh.geometry.dispose();
+      (dodecaMesh.material as THREE.Material).dispose();
+      ringMesh5.geometry.dispose();
+      (ringMesh5.material as THREE.Material).dispose();
+      sphereMesh6.geometry.dispose();
+      (sphereMesh6.material as THREE.Material).dispose();
+      ringMesh6.geometry.dispose();
+      (ringMesh6.material as THREE.Material).dispose();
       lineGeo.dispose();
       lineMaterial.dispose();
     };

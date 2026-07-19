@@ -3,10 +3,13 @@ export interface Project {
   title: string;
   date: string;
   description: string;
+  link?: string;
   github?: string;
   category: "AI & ML" | "Cyber & Security" | "Full-Stack";
   tags: string[];
-  threeIconType: "contract" | "shield" | "network" | "globe";
+  threeIconType: "contract" | "shield" | "network" | "globe" | "layout" | "shopping-cart" | "database" | "smartphone";
+  highlights?: string[];
+  architectureSteps?: string[];
 }
 
 export interface Experience {
@@ -33,7 +36,7 @@ export interface Certification {
 export interface ResumeData {
   name: string;
   title: string;
-  email: string;
+  email: string[];
   phone: string[];
   linkedin: string;
   github?: string;
@@ -44,3 +47,4 @@ export interface ResumeData {
   certifications?: Certification[];
   awards?: string[];
 }
+

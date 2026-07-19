@@ -93,23 +93,28 @@ export default function CertificationsAndContact({ data }: CertContactProps) {
         <div className="md:col-span-5 space-y-6">
 
           {/* Core file contacts download banner */}
-          <div className="pt-4 flex flex-wrap gap-3">
-            <button
-              onClick={() => copyText(data.email, "email-copy")}
-              className="px-4 py-2 rounded-lg bg-stone-900 border border-stone-800 text-stone-300 hover:text-white text-xs font-mono flex items-center gap-1.5 cursor-pointer relative"
-            >
-              <Copy size={12} />
-              <span>Email Contact</span>
-              {copiedLabel === "email-copy" && <Check size={12} className="text-emerald-400 ml-1.5" />}
-            </button>
-            <a
-              href={`mailto:${data.email}`}
-              className="px-4 py-2 rounded-lg bg-orange-950/10 hover:bg-orange-950/20 border border-orange-500/20 text-solara-terracotta text-xs font-mono flex items-center gap-1.5 transition"
-            >
-              <Send size={12} />
-              <span>Direct Link</span>
-            </a>
+          <div className="pt-4 flex flex-col gap-4">
+            {data.email.map((emailStr, idx) => (
+              <div key={idx} className="flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => copyText(emailStr, `email-copy-${idx}`)}
+                  className="px-4 py-2 rounded-lg bg-stone-900 border border-stone-800 text-stone-300 hover:text-white text-xs font-mono flex items-center gap-1.5 cursor-pointer relative"
+                >
+                  <Copy size={12} />
+                  <span className="truncate max-w-[220px]">Copy {emailStr}</span>
+                  {copiedLabel === `email-copy-${idx}` && <Check size={12} className="text-emerald-400 ml-1.5" />}
+                </button>
+                <a
+                  href={`mailto:${emailStr}`}
+                  className="px-4 py-2 rounded-lg bg-orange-950/10 hover:bg-orange-950/20 border border-orange-500/20 text-solara-terracotta text-xs font-mono flex items-center gap-1.5 transition cursor-pointer"
+                >
+                  <Send size={12} />
+                  <span>Direct Link</span>
+                </a>
+              </div>
+            ))}
           </div>
+
         </div>
 
         {/* Right column: Interactive simulated terminal diagnostics log */}

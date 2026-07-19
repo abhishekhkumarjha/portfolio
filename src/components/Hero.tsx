@@ -103,18 +103,21 @@ export default function Hero({ data, onScrollToNext }: HeroProps) {
             )}
             
             {/* Click to copy email */}
-            <button
-              onClick={() => copyToClipboard(data.email, "email")}
-              className="flex items-center gap-2 px-4 py-2 rounded-md bg-slate-900/80 hover:bg-slate-800/80 border border-slate-700/50 text-slate-200 text-xs transition duration-200 font-mono relative cursor-pointer"
-            >
-              <Mail size={14} />
-              <span className="max-w-[150px] truncate">{data.email}</span>
-              {copiedText === "email" ? (
-                <Check size={12} className="text-emerald-400 ml-1" />
-              ) : (
-                <Clipboard size={12} className="text-slate-500 hover:text-slate-300 ml-1" />
-              )}
-            </button>
+            {data.email.map((emailStr, idx) => (
+              <button
+                key={idx}
+                onClick={() => copyToClipboard(emailStr, `email-${idx}`)}
+                className="flex items-center gap-2 px-4 py-2 rounded-md bg-slate-900/80 hover:bg-slate-800/80 border border-slate-700/50 text-slate-200 text-xs transition duration-200 font-mono relative cursor-pointer"
+              >
+                <Mail size={14} />
+                <span className="max-w-[200px] truncate">{emailStr}</span>
+                {copiedText === `email-${idx}` ? (
+                  <Check size={12} className="text-emerald-400 ml-1" />
+                ) : (
+                  <Clipboard size={12} className="text-slate-500 hover:text-slate-300 ml-1" />
+                )}
+              </button>
+            ))}
           </motion.div>
         </div>
 
@@ -163,14 +166,27 @@ export default function Hero({ data, onScrollToNext }: HeroProps) {
                     <span>{phoneNum}</span>
                     <button
                       onClick={() => copyToClipboard(phoneNum, `phone-${i}`)}
-                      className="text-[10px] text-stone-500 hover:text-white"
+                      className="text-[10px] text-stone-500 hover:text-white cursor-pointer inline-flex items-center"
                     >
                       {copiedText === `phone-${i}` ? <Check size={8} /> : <Clipboard size={8} />}
                     </button>
                   </div>
                 ))}
+                {data.email.map((emailStr, i) => (
+                  <div key={i} className="flex items-center gap-1.5">
+                    <Mail size={10} className="text-amber-500" />
+                    <span className="truncate max-w-[190px]">{emailStr}</span>
+                    <button
+                      onClick={() => copyToClipboard(emailStr, `email-stat-${i}`)}
+                      className="text-[10px] text-stone-500 hover:text-white cursor-pointer inline-flex items-center"
+                    >
+                      {copiedText === `email-stat-${i}` ? <Check size={8} /> : <Clipboard size={8} />}
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
+
             
             <div className="pt-2">
               <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-950/30 border border-amber-500/20 text-[10px] text-solara-amber">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink, ArrowRight, ShieldCheck, Cpu, Code2, AlertTriangle, X, Compass, Radio } from "lucide-react";
+import { ExternalLink, ArrowRight, ShieldCheck, Cpu, Code2, AlertTriangle, X, Compass, Radio, Check } from "lucide-react";
 import { Project } from "../types";
 
 interface ProjectsProps {
@@ -33,19 +33,33 @@ export default function Projects({
           btn: "bg-orange-500/10 hover:bg-orange-500/20 border-orange-500/20 text-orange-200",
           desc: "Confidentially computed mental health framework inside a secure shield capsule.",
         };
-      case 2: // Antigena AI Defense
+      case 2: // Hollow Socks
         return {
-          accent: "text-solara-amber border-solara-amber/20 bg-amber-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(229,186,115,0.1)]",
-          btn: "bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/25 text-amber-200",
-          desc: "Cyber threat defense simulation shown as orbiting neural node structures.",
+          accent: "text-blue-400 border-blue-500/20 bg-blue-950/10",
+          glow: "hover:shadow-[0_0_20px_rgba(96,165,250,0.1)]",
+          btn: "bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/20 text-blue-300",
+          desc: "Custom socks performance product page flow and optimized UI layout.",
         };
-      case 3: // OceanGuardian
+      case 3: // PlumPlay UK
         return {
-          accent: "text-orange-400 border-orange-500/20 bg-orange-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(249,115,22,0.1)]",
-          btn: "bg-orange-500/10 hover:bg-orange-500/20 border-orange-500/20 text-orange-300",
-          desc: "Disaster blueprint tracker linked to geographical orbits and radars.",
+          accent: "text-emerald-400 border-emerald-500/20 bg-emerald-950/10",
+          glow: "hover:shadow-[0_0_20px_rgba(52,211,153,0.1)]",
+          btn: "bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300",
+          desc: "Magento performance overhaul, security upgrades, and custom checkout modules.",
+        };
+      case 4: // Dash into Learning
+        return {
+          accent: "text-purple-400 border-purple-500/20 bg-purple-950/10",
+          glow: "hover:shadow-[0_0_20px_rgba(192,132,252,0.1)]",
+          btn: "bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/20 text-purple-300",
+          desc: "Shopify brand migration, custom Liquid theme, and optimized checkout flow.",
+        };
+      case 5: // Vitamin H2
+        return {
+          accent: "text-cyan-400 border-cyan-500/20 bg-cyan-950/10",
+          glow: "hover:shadow-[0_0_20px_rgba(34,211,238,0.1)]",
+          btn: "bg-cyan-500/10 hover:bg-cyan-500/20 border-cyan-500/20 text-cyan-300",
+          desc: "Clean mobile-first layout design featuring high-CRO custom catalog filtering.",
         };
       default:
         return {
@@ -199,6 +213,16 @@ export default function Projects({
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-950/50 border border-stone-900/50 text-solara-amber text-xs font-mono">
                     <Compass size={11} /> Ready in 3D Context
                   </span>
+                  {selectedProject.link && (
+                    <a
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-amber-950/20 border border-amber-500/30 hover:bg-amber-500/40 text-amber-200 hover:text-white text-xs font-mono transition cursor-pointer"
+                    >
+                      <ExternalLink size={11} /> Visit Site
+                    </a>
+                  )}
                 </div>
 
                 {/* Section Details */}
@@ -211,6 +235,19 @@ export default function Projects({
                       {selectedProject.description}
                     </p>
                   </div>
+
+                  {selectedProject.highlights && selectedProject.highlights.length > 0 && (
+                    <div className="space-y-2 pt-2">
+                      <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                        <Check size={12} className="text-amber-500" /> Highlights & Achievements
+                      </h4>
+                      <ul className="list-disc pl-5 space-y-1 text-slate-300 text-sm font-light">
+                        {selectedProject.highlights.map((highlight, hIdx) => (
+                          <li key={hIdx}>{highlight}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   <div className="space-y-2 pt-2">
                     <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -229,43 +266,32 @@ export default function Projects({
                   </div>
 
                   {/* Conceptual architecture diagrams */}
-                  <div className="pt-4 mt-2 p-4 rounded-xl bg-[#080605] border border-stone-900 space-y-3 font-mono text-[11px] sm:text-xs">
-                    <div className="text-slate-400 uppercase font-semibold text-xs border-b border-stone-900 pb-1.5 flex items-center gap-1">
-                      <ShieldCheck size={12} className="text-amber-500" /> SYSTEM ARCHITECTURE PATTERNS
+                  {selectedProject.architectureSteps && selectedProject.architectureSteps.length > 0 && (
+                    <div className="pt-4 mt-2 p-4 rounded-xl bg-[#080605] border border-stone-900 space-y-3 font-mono text-[11px] sm:text-xs">
+                      <div className="text-slate-400 uppercase font-semibold text-xs border-b border-stone-900 pb-1.5 flex items-center gap-1">
+                        <ShieldCheck size={12} className="text-amber-500" /> SYSTEM ARCHITECTURE PATTERNS
+                      </div>
+                      <div className="space-y-1.5 text-slate-300">
+                        {selectedProject.architectureSteps.map((step, idx) => {
+                          const parts = step.split(/(\[[^\]]+\])/g);
+                          return (
+                            <div key={idx}>
+                              {parts.map((part, pIdx) => {
+                                if (part.startsWith("[") && part.endsWith("]")) {
+                                  return (
+                                    <span key={pIdx} className="text-solara-amber">
+                                      {part}
+                                    </span>
+                                  );
+                                }
+                                return part;
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                    {selectedProject.id === "proj1" && (
-                      <div className="space-y-1.5 text-slate-300">
-                        <div>1. <span className="text-solara-amber">[USER INTERFACE]</span>: Legal document text input uploads.</div>
-                        <div>2. <span className="text-solara-amber">[NLP PARSING ENGINE]</span>: Custom parsing and chunk indexing.</div>
-                        <div>3. <span className="text-solara-amber">[ML VERIFIER]</span>: Compares clause embeddings to standard legal rulesets.</div>
-                        <div>4. <span className="text-solara-amber">[RISK MONITOR]</span>: Outputs system violation flags & mitigation logs.</div>
-                      </div>
-                    )}
-                    {selectedProject.id === "proj2" && (
-                      <div className="space-y-1.5 text-slate-300">
-                        <div>1. <span className="text-solara-terracotta">[LOCAL STORAGE]</span>: Standard zero-cloud private browser storage limits.</div>
-                        <div>2. <span className="text-solara-terracotta">[PRIVACY PIPELINE]</span>: Client-side mathematical differential privacy filters.</div>
-                        <div>3. <span className="text-solara-terracotta">[LOCALIZED ML]</span>: Real-time sentiment analysis models executed locally.</div>
-                        <div>4. <span className="text-solara-terracotta">[SECURE ENDPOINT]</span>: Guarantees user keys & credentials stay offline.</div>
-                      </div>
-                    )}
-                    {selectedProject.id === "proj3" && (
-                      <div className="space-y-1.5 text-slate-300">
-                        <div>1. <span className="text-yellow-500">[NETWORK INGESTION]</span>: Simulates infrastructure and API routing packets.</div>
-                        <div>2. <span className="text-yellow-500">[ANOMALY CORRELATOR]</span>: Analyzes peaks of sudden density bursts.</div>
-                        <div>3. <span className="text-yellow-500">[ISOLATION TRIGGER]</span>: Automatic blackhole rules triggered upon threat detect.</div>
-                        <div>4. <span className="text-yellow-500">[INTEGRITY TELEMETRY]</span>: Reports cyber threat mitigations and audit history.</div>
-                      </div>
-                    )}
-                    {selectedProject.id === "proj4" && (
-                      <div className="space-y-1.5 text-slate-300">
-                        <div>1. <span className="text-orange-400">[GEO DATASTREAM INGESTION]</span>: Real-time streams from weather/incident reports.</div>
-                        <div>2. <span className="text-orange-400">[WORKFLOW COORDINATOR]</span>: Triggers rapid resource orchestration.</div>
-                        <div>3. <span className="text-orange-400">[OPTIMAL DISPATCH DISK]</span>: Matches nearest dispatch center metrics.</div>
-                        <div>4. <span className="text-orange-400">[RESILIENCE PANEL]</span>: Visualises environmental health coordinates.</div>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
 
                 {/* Close modal banner */}
@@ -285,3 +311,4 @@ export default function Projects({
     </div>
   );
 }
+

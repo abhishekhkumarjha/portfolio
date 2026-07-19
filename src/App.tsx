@@ -126,7 +126,7 @@ export default function App() {
           ))}
           <span className="h-4 w-[1px] bg-white/5" />
           <a
-            href={`mailto:${resumeData.email}`}
+            href={`mailto:${resumeData.email.join(",")}`}
             className="px-3 py-1 rounded bg-amber-950/20 hover:bg-amber-950/40 border border-amber-500/20 text-amber-200 hover:text-white transition uppercase text-[10px]"
           >
             DISPATCH_MAIL
@@ -136,11 +136,12 @@ export default function App() {
         {/* Mobile menu trigger */}
         <div className="flex md:hidden items-center gap-2">
           <a
-            href={`mailto:${resumeData.email}`}
+            href={`mailto:${resumeData.email.join(",")}`}
             className="p-1.5 px-2 rounded bg-amber-950/20 text-amber-200 border border-amber-500/20 text-[10px] uppercase font-mono"
           >
             Mail
           </a>
+
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="p-1 px-1.5 rounded border border-white/5 bg-stone-900/60 text-stone-400 hover:text-white cursor-pointer"
