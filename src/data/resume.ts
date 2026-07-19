@@ -30,6 +30,7 @@ export const resumeData: ResumeData = {
       threeIconType: "contract",
       tags: ["Python", "NLP", "Machine Learning", "Streamlit", "Risk Mitigation"],
       description: "Developed an intelligent automation platform designed to analyze legal contracts against evolving regulatory frameworks. Utilized NLP and Machine Learning models to systematically parse document text, flags non-compliant clauses, and generate detailed structural risk mitigation logs.",
+      link: "https://ai-powered-regulatory-compilance-ch.vercel.app/",
       highlights: [
         "NLP-driven clause parsing & indexing",
         "Machine learning regulatory rule comparison",
@@ -50,6 +51,7 @@ export const resumeData: ResumeData = {
       threeIconType: "shield",
       tags: ["AI", "Privacy Algorithms", "Confidential Computing", "Localized Processing"],
       description: "Engineered an AI-backed mental health data protection and analytics framework focusing on secure, private, and localized processing. Implemented privacy-preserving algorithms alongside a responsive system flow to ensure sensitive user insights remain confidential and contextually accurate.",
+      link: "https://secure-mind-ai-zeta.vercel.app/",
       highlights: [
         "Zero-cloud client-side storage validation",
         "Differential privacy algorithm integration",
