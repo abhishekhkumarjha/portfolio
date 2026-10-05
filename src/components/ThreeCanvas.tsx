@@ -26,7 +26,6 @@ export default function ThreeCanvas({
     targetMouseY: 0,
   });
 
-  // Synchronize dynamic state
   useEffect(() => {
     stateRef.current.activeSection = activeSection;
     stateRef.current.scrollPercent = scrollPercent;
@@ -43,7 +42,6 @@ export default function ThreeCanvas({
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x080605, 0.08);
 
-    // Initial size from container
     let width = container.clientWidth;
     let height = container.clientHeight;
 
@@ -59,22 +57,20 @@ export default function ThreeCanvas({
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Lights - Americas Warm Sunset Sand
+    // Lights
     const ambientLight = new THREE.AmbientLight(0x22130c, 1.8);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xff6f59, 2.8); // Molten Terracotta
+    const dirLight1 = new THREE.DirectionalLight(0xff6f59, 2.8);
     dirLight1.position.set(5, 5, 5);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xffd166, 2.2); // Warm Golden
+    const dirLight2 = new THREE.DirectionalLight(0xffd166, 2.2);
     dirLight2.position.set(-5, -5, 5);
     scene.add(dirLight2);
 
-    const pointLight = new THREE.PointLight(0xe5ba73, 3, 10); // Amber core light
+    const pointLight = new THREE.PointLight(0xe5ba73, 3, 10);
     scene.add(pointLight);
-
-    // --- 3D Objects Setup ---
 
     // 1. Starfield / Floating Particles
     const particleCount = 1200;
@@ -85,10 +81,9 @@ export default function ThreeCanvas({
 
     const colorGold = new THREE.Color(0xffd166);
     const colorTerracotta = new THREE.Color(0xff6f59);
-    const colorDust = new THREE.Color(0x503b31); // dark charcoal dust
+    const colorDust = new THREE.Color(0x503b31);
 
     for (let i = 0; i < particleCount; i++) {
-      // Spheroid distribution
       const r = 5 + Math.random() * 20;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
@@ -105,7 +100,6 @@ export default function ThreeCanvas({
       originalPositions[i * 3 + 1] = py;
       originalPositions[i * 3 + 2] = pz;
 
-      // Color variation
       let mixedColor = colorDust;
       const rand = Math.random();
       if (rand > 0.6) {
@@ -122,7 +116,6 @@ export default function ThreeCanvas({
     particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     particleGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    // Custom glow circular point texture using canvas
     const createCircleTexture = () => {
       const size = 16;
       const canvasMat = document.createElement("canvas");
@@ -135,8 +128,8 @@ export default function ThreeCanvas({
           size / 2, size / 2, size / 2
         );
         gradient.addColorStop(0, "rgba(255,255,255,1)");
-        gradient.addColorStop(0.2, "rgba(255,111,89,0.8)"); // sunset terracotta glow
-        gradient.addColorStop(0.5, "rgba(229,186,115,0.2)"); // gold amber halo
+        gradient.addColorStop(0.2, "rgba(255,111,89,0.8)");
+        gradient.addColorStop(0.5, "rgba(229,186,115,0.2)");
         gradient.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, size, size);
@@ -156,11 +149,11 @@ export default function ThreeCanvas({
     const starParticles = new THREE.Points(particleGeo, particleMat);
     scene.add(starParticles);
 
-    // 2. Central Core / Torus Knot (Main Hero Mesh)
+    // 2. Central Core / Torus Knot
     const coreGeo = new THREE.TorusKnotGeometry(1.2, 0.35, 120, 16);
     const coreMat = new THREE.MeshStandardMaterial({
-      color: 0x1a120b, // Obsidian walnut
-      emissive: 0x2d1a0e, // warm embers
+      color: 0x1a120b,
+      emissive: 0x2d1a0e,
       roughness: 0.2,
       metalness: 0.9,
       wireframe: true,
@@ -168,10 +161,9 @@ export default function ThreeCanvas({
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     scene.add(coreMesh);
 
-    // Glowing outer cage
     const cageGeo = new THREE.IcosahedronGeometry(2, 2);
     const cageMat = new THREE.MeshBasicMaterial({
-      color: 0xffb703, // Amber gold cage
+      color: 0xffb703,
       wireframe: true,
       transparent: true,
       opacity: 0.15,
@@ -179,20 +171,21 @@ export default function ThreeCanvas({
     const cageMesh = new THREE.Mesh(cageGeo, cageMat);
     scene.add(cageMesh);
 
-    // 3. Experience Nodes Group
+    // 3. Experience Nodes Group (5 nodes matching 5 roles)
     const expGroup = new THREE.Group();
     scene.add(expGroup);
 
     const expNodes: THREE.Mesh[] = [];
     const expDetails = [
-      { color: 0xffd166, pos: new THREE.Vector3(-2.5, 1, -1) }, // Solar Gold
-      { color: 0xff6f59, pos: new THREE.Vector3(0, -1.5, -0.5) }, // Sunset Terracotta
-      { color: 0xf4f1de, pos: new THREE.Vector3(2.5, 1, -1) }, // Desert Champagne
+      { color: 0xffd166, pos: new THREE.Vector3(-2.8, 1.2, -1) }, // Cloudinntech AI/ML (Gold)
+      { color: 0x34d399, pos: new THREE.Vector3(-1.4, -1.2, -0.6) }, // Cloudinntech Cyber (Emerald)
+      { color: 0xff6f59, pos: new THREE.Vector3(0, 1.2, -0.8) }, // Infosys (Terracotta)
+      { color: 0x60a5fa, pos: new THREE.Vector3(1.4, -1.0, -0.6) }, // Salesforce (Blue)
+      { color: 0xc084fc, pos: new THREE.Vector3(2.8, 1.0, -1) }, // J&J MedTech (Purple)
     ];
 
     expDetails.forEach((details) => {
-      // Sphere
-      const sphereGeo = new THREE.SphereGeometry(0.4, 32, 32);
+      const sphereGeo = new THREE.SphereGeometry(0.35, 32, 32);
       const sphereMat = new THREE.MeshStandardMaterial({
         color: details.color,
         emissive: details.color,
@@ -205,52 +198,51 @@ export default function ThreeCanvas({
       expGroup.add(node);
       expNodes.push(node);
 
-      // Orbital wire around each node
-      const ringGeo = new THREE.RingGeometry(0.6, 0.65, 32);
+      const ringGeo = new THREE.RingGeometry(0.55, 0.6, 32);
       const ringMat = new THREE.MeshBasicMaterial({
         color: details.color,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.45,
       });
       const ring = new THREE.Mesh(ringGeo, ringMat);
       ring.rotation.x = Math.PI / 2;
       node.add(ring);
     });
 
-    // Glowing connection lines for experience
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0xffb703, // amber golden link
+      color: 0xffb703,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.35,
     });
-    const linePoints: THREE.Vector3[] = [
-      expDetails[0].pos,
-      new THREE.Vector3(0, 0, 0),
-      expDetails[1].pos,
-      new THREE.Vector3(0, 0, 0),
-      expDetails[2].pos,
-    ];
+    const linePoints: THREE.Vector3[] = expDetails.map(d => d.pos);
     const lineGeo = new THREE.BufferGeometry().setFromPoints(linePoints);
     const expLines = new THREE.Line(lineGeo, lineMaterial);
     scene.add(expLines);
 
-    // 4. Projects Geometries Group
+    // 4. Projects Geometries Group (4 projects from resume)
     const projGroup = new THREE.Group();
     scene.add(projGroup);
 
     const projMeshes: THREE.Group[] = [];
-    const projColors = [0xffd166, 0xff6f59, 0x60a5fa, 0x34d399, 0xc084fc, 0x22d3ee]; // Yellow, Terracotta, Blue, Emerald, Purple, Cyan
+    const projColors = [0xffd166, 0xff6f59, 0x34d399, 0x38bdf8]; // Gold, Terracotta, Emerald, Cyan
 
-    // Dynamic positioning helper for 6 projects
     const getProjPos = (idx: number) => {
-      const x = -3.75 + idx * 1.5;
-      const y = idx % 2 === 0 ? 1.5 : -1.8;
-      const z = idx % 2 === 0 ? -2 : -1.8;
-      return new THREE.Vector3(x, y, z);
+      switch (idx) {
+        case 0:
+          return new THREE.Vector3(-2.8, 0.3, -1.6);
+        case 1:
+          return new THREE.Vector3(-0.9, -0.4, -1.4);
+        case 2:
+          return new THREE.Vector3(0.9, 0.3, -1.4);
+        case 3:
+          return new THREE.Vector3(2.8, -0.4, -1.6);
+        default:
+          return new THREE.Vector3(0, 0, -2);
+      }
     };
 
-    // Project 1 Shape: Compliance Checker - Document scroll mesh
+    // Project 1: Compliance Checker - Document Cylinder + scan ring
     const proj1Group = new THREE.Group();
     const docGrid = new THREE.Mesh(
       new THREE.CylinderGeometry(0.5, 0.5, 1.2, 16, 4, true),
@@ -258,15 +250,21 @@ export default function ThreeCanvas({
         color: projColors[0],
         wireframe: true,
         emissive: projColors[0],
-        emissiveIntensity: 0.5,
+        emissiveIntensity: 0.6,
       })
     );
+    const scanRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.65, 0.02, 8, 32),
+      new THREE.MeshBasicMaterial({ color: 0xffe066, transparent: true, opacity: 0.6 })
+    );
+    scanRing.rotation.x = Math.PI / 2;
     proj1Group.add(docGrid);
+    proj1Group.add(scanRing);
     proj1Group.position.copy(getProjPos(0));
     projGroup.add(proj1Group);
     projMeshes.push(proj1Group);
 
-    // Project 2 Shape: SecureMind AI - Icosahedron inside custom shield
+    // Project 2: SecureMind AI - Icosahedron + Octahedron shield
     const proj2Group = new THREE.Group();
     const brainMesh = new THREE.Mesh(
       new THREE.IcosahedronGeometry(0.6, 1),
@@ -274,16 +272,16 @@ export default function ThreeCanvas({
         color: projColors[1],
         wireframe: true,
         emissive: projColors[1],
-        emissiveIntensity: 0.6,
+        emissiveIntensity: 0.7,
       })
     );
     const shieldMesh = new THREE.Mesh(
-      new THREE.OctahedronGeometry(0.9, 0),
+      new THREE.OctahedronGeometry(0.95, 0),
       new THREE.MeshBasicMaterial({
         color: projColors[1],
         wireframe: true,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.3,
       })
     );
     proj2Group.add(brainMesh);
@@ -292,94 +290,69 @@ export default function ThreeCanvas({
     projGroup.add(proj2Group);
     projMeshes.push(proj2Group);
 
-    // Project 3 Shape: Hollow Socks - Torus / ring of points (sock loop shape)
+    // Project 3: Antigena AI Defense System - Cyber Defense Dodecahedron + Shield Perimeter
     const proj3Group = new THREE.Group();
-    const torusMesh = new THREE.Mesh(
-      new THREE.TorusGeometry(0.55, 0.22, 8, 24),
+    const cyberNode = new THREE.Mesh(
+      new THREE.DodecahedronGeometry(0.55),
       new THREE.MeshStandardMaterial({
         color: projColors[2],
         wireframe: true,
         emissive: projColors[2],
-        emissiveIntensity: 0.5,
+        emissiveIntensity: 0.6,
       })
     );
-    proj3Group.add(torusMesh);
+    const perimeterRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.85, 0.02, 8, 32),
+      new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0.5 })
+    );
+    perimeterRing.rotation.x = Math.PI / 4;
+    proj3Group.add(cyberNode);
+    proj3Group.add(perimeterRing);
     proj3Group.position.copy(getProjPos(2));
     projGroup.add(proj3Group);
     projMeshes.push(proj3Group);
 
-    // Project 4 Shape: PlumPlay UK - Cone / double helix structure
+    // Project 4: OceanGuardian - Oceanic Globe + Radar rings
     const proj4Group = new THREE.Group();
-    const coneMesh = new THREE.Mesh(
-      new THREE.ConeGeometry(0.55, 1.1, 8, 4, true),
+    const globeMesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.6, 16, 16),
       new THREE.MeshStandardMaterial({
         color: projColors[3],
         wireframe: true,
         emissive: projColors[3],
-        emissiveIntensity: 0.5,
+        emissiveIntensity: 0.6,
       })
     );
-    proj4Group.add(coneMesh);
+    const radarRing1 = new THREE.Mesh(
+      new THREE.TorusGeometry(0.85, 0.02, 8, 32),
+      new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.5 })
+    );
+    radarRing1.rotation.x = Math.PI / 3;
+
+    const radarRing2 = new THREE.Mesh(
+      new THREE.TorusGeometry(1.0, 0.015, 8, 32),
+      new THREE.MeshBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.4 })
+    );
+    radarRing2.rotation.y = Math.PI / 4;
+
+    proj4Group.add(globeMesh);
+    proj4Group.add(radarRing1);
+    proj4Group.add(radarRing2);
     proj4Group.position.copy(getProjPos(3));
     projGroup.add(proj4Group);
     projMeshes.push(proj4Group);
 
-    // Project 5 Shape: Dash into Learning - Dodecahedron with outer ring
-    const proj5Group = new THREE.Group();
-    const dodecaMesh = new THREE.Mesh(
-      new THREE.DodecahedronGeometry(0.55),
-      new THREE.MeshStandardMaterial({
-        color: projColors[4],
-        wireframe: true,
-        emissive: projColors[4],
-        emissiveIntensity: 0.5,
-      })
-    );
-    const ringMesh5 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.8, 0.015, 8, 32),
-      new THREE.MeshBasicMaterial({ color: projColors[4], transparent: true, opacity: 0.4 })
-    );
-    proj5Group.add(dodecaMesh);
-    proj5Group.add(ringMesh5);
-    proj5Group.position.copy(getProjPos(4));
-    projGroup.add(proj5Group);
-    projMeshes.push(proj5Group);
-
-    // Project 6 Shape: Vitamin H2 - Sphere with horizontal rings
-    const proj6Group = new THREE.Group();
-    const sphereMesh6 = new THREE.Mesh(
-      new THREE.SphereGeometry(0.55, 12, 12),
-      new THREE.MeshStandardMaterial({
-        color: projColors[5],
-        wireframe: true,
-        emissive: projColors[5],
-        emissiveIntensity: 0.5,
-      })
-    );
-    const ringMesh6 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.75, 0.015, 8, 32),
-      new THREE.MeshBasicMaterial({ color: projColors[5], transparent: true, opacity: 0.4 })
-    );
-    ringMesh6.rotation.x = Math.PI / 2;
-    proj6Group.add(sphereMesh6);
-    proj6Group.add(ringMesh6);
-    proj6Group.position.copy(getProjPos(5));
-    projGroup.add(proj6Group);
-    projMeshes.push(proj6Group);
-
-
-    // Handle Resize strictly using ResizeObserver
+    // ResizeObserver
     const resizeObserver = new ResizeObserver((entries) => {
       if (!entries || entries.length === 0) return;
       const entry = entries[0];
       const { width: newWidth, height: newHeight } = entry.contentRect;
 
       width = newWidth;
-      height = newHeight || 300; // fallback
+      height = newHeight || 300;
 
       camera.aspect = width / height;
 
-      // Adjust FOV for smaller layouts dynamically so 3D remains visible and nice
       if (width < 640) {
         camera.fov = 75;
       } else if (width < 1024) {
@@ -396,7 +369,6 @@ export default function ThreeCanvas({
 
     resizeObserver.observe(container);
 
-    // Track Mouse Pointer for Parallax tilting
     const onMouseMove = (event: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / width) * 2 - 1;
@@ -407,7 +379,6 @@ export default function ThreeCanvas({
 
     window.addEventListener("mousemove", onMouseMove);
 
-    // Animation Loop
     let clock = new THREE.Clock();
     let animId: number;
 
@@ -417,86 +388,84 @@ export default function ThreeCanvas({
       const elapsedTime = clock.getElapsedTime();
       const state = stateRef.current;
 
-      // Smooth mouse lerp
       state.mouseX += (state.targetMouseX - state.mouseX) * 0.08;
       state.mouseY += (state.targetMouseY - state.mouseY) * 0.08;
 
-      // Rotate starfield slowly
       starParticles.rotation.y = elapsedTime * 0.02 + state.scrollPercent * 0.001;
       starParticles.rotation.x = elapsedTime * 0.005;
 
-      // Gentle movement on particles to look organic
       const positionsArray = particleGeo.attributes.position.array as Float32Array;
       for (let i = 0; i < particleCount; i++) {
         const offset = i * 3;
-        // Wave ripple depending on elapsed time & position
         const oy = originalPositions[offset + 1];
         positionsArray[offset + 1] = oy + Math.sin(elapsedTime * 0.8 + originalPositions[offset]) * 0.15;
       }
       particleGeo.attributes.position.needsUpdate = true;
 
-      // Base rotation for Central Core
       coreMesh.rotation.y = elapsedTime * 0.15;
       coreMesh.rotation.x = elapsedTime * 0.07;
       cageMesh.rotation.y = -elapsedTime * 0.05;
 
       // Rotate Project shapes
       projMeshes.forEach((mesh, index) => {
-        mesh.rotation.y = elapsedTime * 0.3 + index * 10;
-        mesh.rotation.x = elapsedTime * 0.1 + index * 5;
+        mesh.rotation.y = elapsedTime * 0.35 + index * 10;
+        mesh.rotation.x = elapsedTime * 0.12 + index * 5;
 
-        // Pulse projects based on mouse selection
-        let targetScale = 0.8;
+        if (index === 0) {
+          scanRing.position.y = Math.sin(elapsedTime * 2) * 0.45;
+        } else if (index === 2) {
+          perimeterRing.rotation.z = elapsedTime * 0.4;
+        } else if (index === 3) {
+          radarRing1.rotation.z = elapsedTime * 0.5;
+          radarRing2.rotation.x = elapsedTime * 0.3;
+        }
+
+        let targetScale = 0.85;
         if (state.activeSection === 2) {
           if (state.activeProjectIndex === index) {
-            targetScale = 1.35;
+            targetScale = 1.4;
           } else if (state.activeProjectIndex !== null) {
-            targetScale = 0.45; // shrink others
+            targetScale = 0.55;
           } else {
-            targetScale = 0.95; // default active screen scale
+            targetScale = 1.0;
           }
         } else {
-          targetScale = 0.1; // hide or push away when not in projects
+          targetScale = 0.1;
         }
 
         mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.08);
       });
 
-      // Experience group actions
       expNodes.forEach((node, idx) => {
-        // Floating motion
         node.position.y = expDetails[idx].pos.y + Math.sin(elapsedTime * 1.5 + idx) * 0.15;
         node.rotation.y = elapsedTime * 0.5;
       });
 
-      // Animate PointLight color depending on section
       let targetLightColor = new THREE.Color(0xffb703);
       if (state.activeSection === 0) {
-        targetLightColor.setHex(0xff6f59); // Hero: Sunset Terracotta
+        targetLightColor.setHex(0xff6f59);
       } else if (state.activeSection === 1) {
-        targetLightColor.setHex(0xffd166); // Experience: Warm Golden
+        targetLightColor.setHex(0xffd166);
       } else if (state.activeSection === 2) {
-        if (state.activeProjectIndex !== null) {
+        if (state.activeProjectIndex !== null && projColors[state.activeProjectIndex]) {
           targetLightColor.setHex(projColors[state.activeProjectIndex]);
         } else {
-          targetLightColor.setHex(0xca8a04); // Projects: Deep Brass
+          targetLightColor.setHex(0xca8a04);
         }
       } else if (state.activeSection === 3) {
-        targetLightColor.setHex(0xffb703); // Skills: Gold Amber
+        targetLightColor.setHex(0xffb703);
       } else {
-        targetLightColor.setHex(0xff6f59); // Contact: Metallic Clay
+        targetLightColor.setHex(0xff6f59);
       }
       pointLight.color.lerp(targetLightColor, 0.05);
 
-      // Camera positions & lookup target paths depending on current section
       let targetCamX = 0;
       let targetCamY = 0;
       let targetCamZ = 6;
       let targetLookAt = new THREE.Vector3(0, 0, 0);
 
-      // Layout animations for sections
       if (state.activeSection === 0) {
-        // Section 1: Hero
+        // Hero
         targetCamX = state.mouseX * 1.5;
         targetCamY = state.mouseY * 1.5;
         targetCamZ = 5.2 - (state.scrollPercent * 0.01);
@@ -506,7 +475,7 @@ export default function ThreeCanvas({
         expLines.visible = false;
         projGroup.visible = false;
       } else if (state.activeSection === 1) {
-        // Section 2: Experience
+        // Experience
         targetCamX = state.mouseX * 1.2;
         targetCamY = 0.5 + state.mouseY * 1.2;
         targetCamZ = 5.8;
@@ -516,27 +485,22 @@ export default function ThreeCanvas({
         expLines.visible = true;
         projGroup.visible = false;
 
-        // Shrink the core mesh to let nodes stand out
         const coreS = 0.45;
         coreMesh.scale.lerp(new THREE.Vector3(coreS, coreS, coreS), 0.08);
         cageMesh.scale.lerp(new THREE.Vector3(0.5, 0.5, 0.5), 0.08);
-
-        // Slide core out an offset
         coreMesh.position.lerp(new THREE.Vector3(0, 0, -1), 0.08);
         cageMesh.position.lerp(new THREE.Vector3(0, 0, -1), 0.08);
       } else if (state.activeSection === 2) {
-        // Section 3: Projects
-        // Focus strongly on project objects
+        // Projects
         coreMesh.visible = false;
         cageMesh.visible = false;
         expGroup.visible = false;
         expLines.visible = false;
         projGroup.visible = true;
 
-        targetCamZ = 4.8;
-        if (state.activeProjectIndex !== null) {
+        targetCamZ = 5.0;
+        if (state.activeProjectIndex !== null && projMeshes[state.activeProjectIndex]) {
           const focusedPos = projMeshes[state.activeProjectIndex].position;
-          // Zoom towards project camera path
           targetCamX = focusedPos.x * 0.8 + state.mouseX * 0.6;
           targetCamY = focusedPos.y * 0.8 + state.mouseY * 0.6;
           targetLookAt.copy(focusedPos);
@@ -545,7 +509,7 @@ export default function ThreeCanvas({
           targetCamY = state.mouseY * 1.0;
         }
       } else if (state.activeSection === 3) {
-        // Section 4: Skills - particles helix whirlpool
+        // Skills
         coreMesh.visible = true;
         cageMesh.visible = true;
         expGroup.visible = false;
@@ -563,26 +527,20 @@ export default function ThreeCanvas({
         targetCamY = state.mouseY * 1.5;
         targetCamZ = 6.4;
 
-        // Custom morph particles to form vertical helix/tornado in skills
         for (let i = 0; i < particleCount; i++) {
           const offset = i * 3;
-          const origX = originalPositions[offset];
-          const origZ = originalPositions[offset + 2];
-          // Spiral factors
           const tHeight = originalPositions[offset + 1];
           const spiralAngle = tHeight * 0.8 + elapsedTime * 1.0;
           const radius = 2.2 + Math.sin(tHeight * 0.4) * 0.5;
 
-          // Target helix coords
           const tx = Math.cos(spiralAngle) * radius;
           const tz = Math.sin(spiralAngle) * radius;
 
-          // Lerp original sphere coords into helix coords
           positionsArray[offset] = THREE.MathUtils.lerp(positionsArray[offset], tx, 0.05);
           positionsArray[offset + 2] = THREE.MathUtils.lerp(positionsArray[offset + 2], tz, 0.05);
         }
       } else {
-        // Section 5: Certifications & Contact: Particles form infinite Saturn ring
+        // Certifications & Contact
         coreMesh.visible = true;
         cageMesh.visible = true;
         expGroup.visible = false;
@@ -595,15 +553,14 @@ export default function ThreeCanvas({
 
         targetCamX = state.mouseX * 0.8;
         targetCamY = state.mouseY * 0.8;
-        targetCamZ = 3.6; // Get close into the ring
+        targetCamZ = 3.6;
 
-        // Morph particles to flat ring
         for (let i = 0; i < particleCount; i++) {
           const offset = i * 3;
           const angle = Math.atan2(originalPositions[offset + 2], originalPositions[offset]);
-          const dist = 3.0 + (Math.abs(originalPositions[offset + 1]) * 0.6); // ring radius
+          const dist = 3.0 + (Math.abs(originalPositions[offset + 1]) * 0.6);
           const tx = Math.cos(angle + elapsedTime * 0.05) * dist;
-          const ty = (Math.random() - 0.5) * 0.08; // extremely thin on y
+          const ty = (Math.random() - 0.5) * 0.08;
           const tz = Math.sin(angle + elapsedTime * 0.05) * dist;
 
           positionsArray[offset] = THREE.MathUtils.lerp(positionsArray[offset], tx, 0.06);
@@ -612,7 +569,6 @@ export default function ThreeCanvas({
         }
       }
 
-      // Restore core positions back when returning to 0 Hero
       if (state.activeSection === 0) {
         const resetScale = 1.0;
         coreMesh.scale.lerp(new THREE.Vector3(resetScale, resetScale, resetScale), 0.08);
@@ -620,7 +576,6 @@ export default function ThreeCanvas({
         coreMesh.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
         cageMesh.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
 
-        // Put particles back to spherical distribution easily
         for (let i = 0; i < particleCount; i++) {
           const offset = i * 3;
           positionsArray[offset] = THREE.MathUtils.lerp(positionsArray[offset], originalPositions[offset], 0.04);
@@ -629,12 +584,10 @@ export default function ThreeCanvas({
         }
       }
 
-      // Smooth camera interpolation
       camera.position.x += (targetCamX - camera.position.x) * 0.05;
       camera.position.y += (targetCamY - camera.position.y) * 0.05;
       camera.position.z += (targetCamZ - camera.position.z) * 0.05;
 
-      // Make camera look smoothly at target
       const currentLookAt = new THREE.Vector3(0, 0, 0);
       currentLookAt.lerp(targetLookAt, 0.1);
       camera.lookAt(currentLookAt);
@@ -644,13 +597,11 @@ export default function ThreeCanvas({
 
     animate();
 
-    // Clean up
     return () => {
       cancelAnimationFrame(animId);
       resizeObserver.disconnect();
       window.removeEventListener("mousemove", onMouseMove);
       renderer.dispose();
-      // Dispose materials & geometries
       particleGeo.dispose();
       particleMat.dispose();
       coreGeo.dispose();
@@ -667,22 +618,22 @@ export default function ThreeCanvas({
       });
       docGrid.geometry.dispose();
       (docGrid.material as THREE.Material).dispose();
+      scanRing.geometry.dispose();
+      (scanRing.material as THREE.Material).dispose();
       brainMesh.geometry.dispose();
       (brainMesh.material as THREE.Material).dispose();
       shieldMesh.geometry.dispose();
       (shieldMesh.material as THREE.Material).dispose();
-      torusMesh.geometry.dispose();
-      (torusMesh.material as THREE.Material).dispose();
-      coneMesh.geometry.dispose();
-      (coneMesh.material as THREE.Material).dispose();
-      dodecaMesh.geometry.dispose();
-      (dodecaMesh.material as THREE.Material).dispose();
-      ringMesh5.geometry.dispose();
-      (ringMesh5.material as THREE.Material).dispose();
-      sphereMesh6.geometry.dispose();
-      (sphereMesh6.material as THREE.Material).dispose();
-      ringMesh6.geometry.dispose();
-      (ringMesh6.material as THREE.Material).dispose();
+      cyberNode.geometry.dispose();
+      (cyberNode.material as THREE.Material).dispose();
+      perimeterRing.geometry.dispose();
+      (perimeterRing.material as THREE.Material).dispose();
+      globeMesh.geometry.dispose();
+      (globeMesh.material as THREE.Material).dispose();
+      radarRing1.geometry.dispose();
+      (radarRing1.material as THREE.Material).dispose();
+      radarRing2.geometry.dispose();
+      (radarRing2.material as THREE.Material).dispose();
       lineGeo.dispose();
       lineMaterial.dispose();
     };

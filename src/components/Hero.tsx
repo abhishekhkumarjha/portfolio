@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Mail, Github, Linkedin, Clipboard, Check, Phone, Shield, Cpu, Cloud, MapPin } from "lucide-react";
+import { Mail, Github, Linkedin, Clipboard, Check, Phone, Shield, Cpu, Cloud, MapPin, GraduationCap, Award } from "lucide-react";
 import { useState } from "react";
 import { ResumeData } from "../types";
 
@@ -33,7 +33,7 @@ export default function Hero({ data, onScrollToNext }: HeroProps) {
             <div className="flex items-center gap-2">
               <span className="h-[1px] w-8 bg-amber-500/55"></span>
               <span className="text-xs font-mono tracking-[0.25em] text-amber-500 uppercase">
-                Systems & Automation Portfolio
+                AI & Systems Architecture
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-white uppercase">
@@ -61,16 +61,16 @@ export default function Hero({ data, onScrollToNext }: HeroProps) {
             className="grid grid-cols-3 gap-3 max-w-md pt-2"
           >
             <div className="cyber-glass p-3 rounded-lg border border-amber-500/10 text-center">
-              <div className="text-solara-amber font-mono text-lg font-bold">5+ Yrs</div>
-              <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider font-semibold">At CloudInntech</div>
+              <div className="text-solara-amber font-mono text-lg font-bold">5</div>
+              <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider font-semibold">Internships</div>
             </div>
             <div className="cyber-glass p-3 rounded-lg border border-orange-500/10 text-center">
               <div className="text-solara-terracotta font-mono text-lg font-bold">4</div>
-              <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider font-semibold">Core Systems</div>
+              <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider font-semibold">Core AI Platforms</div>
             </div>
             <div className="cyber-glass p-3 rounded-lg border border-yellow-600/10 text-center">
-              <div className="text-yellow-500 font-mono text-lg font-bold">AI/SEC</div>
-              <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider font-semibold">Core Focus</div>
+              <div className="text-yellow-500 font-mono text-lg font-bold">Oracle+Mongo</div>
+              <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider font-semibold">Certified Pro</div>
             </div>
           </motion.div>
 
@@ -130,35 +130,35 @@ export default function Hero({ data, onScrollToNext }: HeroProps) {
         >
           <div className="flex justify-between items-center pb-2 border-b border-white/5">
             <span className="text-xs font-mono text-solara-amber flex items-center gap-1.5 uppercase tracking-wider">
-              <Cpu size={12} /> SYSTEM_INFO.LOG
+              <Cpu size={12} /> SYSTEM_PROFILE.LOG
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
           </div>
 
           <div className="space-y-3.5 font-mono text-xs">
             <div className="space-y-1">
-              <div className="text-stone-500 uppercase tracking-tight">Status</div>
+              <div className="text-stone-500 uppercase tracking-tight">Status & Verification</div>
               <div className="text-stone-300 flex items-center gap-1">
-                <span>Oracle & MongoDB Certified Professional</span>
+                <span>Oracle & MongoDB Certified | Cloudinntech AI/ML Intern</span>
               </div>
             </div>
 
             <div className="space-y-1">
-              <div className="text-stone-500 uppercase tracking-tight">Focus Domains</div>
+              <div className="text-stone-500 uppercase tracking-tight">Core Domains</div>
               <div className="text-yellow-400/90 leading-relaxed">
-                Full-Stack, AI Automation, Cyber Defense
+                Artificial Intelligence (AI), NLP, Machine Learning (ML), Cyber Defense
               </div>
             </div>
 
             <div className="space-y-1">
-              <div className="text-stone-500 uppercase tracking-tight">Primary Tech</div>
-              <div className="text-orange-300/95">
-                Java (SE 17), Python, React.js, Node.js
+              <div className="text-stone-500 uppercase tracking-tight">Primary Stack</div>
+              <div className="text-orange-300/95 leading-relaxed">
+                Java (SE 17), Python, AWS, Node.js, React.js, MongoDB, MySQL
               </div>
             </div>
 
             <div className="space-y-1">
-              <div className="text-stone-500 uppercase tracking-tight">Contacts</div>
+              <div className="text-stone-500 uppercase tracking-tight">Direct Comms</div>
               <div className="text-stone-300 space-y-1">
                 {data.phone.map((phoneNum, i) => (
                   <div key={i} className="flex items-center gap-1.5">
@@ -187,10 +187,12 @@ export default function Hero({ data, onScrollToNext }: HeroProps) {
               </div>
             </div>
 
-            
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap gap-2">
               <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-950/30 border border-amber-500/20 text-[10px] text-solara-amber">
-                <MapPin size={10} /> Remote / Hybrid
+                <MapPin size={10} /> Remote / Enterprise
+              </div>
+              <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-950/30 border border-blue-500/20 text-[10px] text-blue-300">
+                <GraduationCap size={10} /> SRM University AP
               </div>
             </div>
           </div>

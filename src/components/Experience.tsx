@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Briefcase, Calendar, Award, Network } from "lucide-react";
+import { Briefcase, Calendar, Award, Network, Cpu, ShieldCheck } from "lucide-react";
 import { Experience } from "../types";
 
 interface ExperienceProps {
@@ -7,25 +7,55 @@ interface ExperienceProps {
 }
 
 export default function ExperienceSection({ experienceList }: ExperienceProps) {
-  // Let's map custom colors or tags to specific companies for high-contrast branding
-  const getBrandDetails = (company: string) => {
-    if (company.includes("Infosys")) {
+  const getBrandDetails = (role: string, company: string) => {
+    if (company.includes("Cloudinntech")) {
+      if (role.includes("AI") || role.includes("ML")) {
+        return {
+          color: "border-amber-500/25 text-solara-amber bg-amber-950/15",
+          pill: "bg-amber-500/10 text-amber-300 border-amber-500/25",
+          glow: "shadow-[0_0_15px_rgba(229,186,115,0.1)]",
+          badge: "AI/ML & NLP Workflows",
+          icon: <Cpu size={10} />,
+        };
+      } else {
+        return {
+          color: "border-emerald-500/20 text-emerald-400 bg-emerald-950/10",
+          pill: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20",
+          glow: "shadow-[0_0_15px_rgba(16,185,129,0.08)]",
+          badge: "Cyber Threat & Traffic Isolation",
+          icon: <ShieldCheck size={10} />,
+        };
+      }
+    } else if (company.includes("Infosys")) {
       return {
-        color: "border-amber-500/20 text-solara-amber bg-amber-950/10",
-        pill: "bg-amber-500/10 text-amber-300 border-amber-500/20",
-        glow: "shadow-[0_0_15px_rgba(229,186,115,0.08)]",
+        color: "border-orange-500/20 text-orange-400 bg-orange-950/10",
+        pill: "bg-orange-500/10 text-orange-300 border-orange-500/20",
+        glow: "shadow-[0_0_15px_rgba(249,115,22,0.08)]",
+        badge: "Springboard 6.0 Track",
+        icon: <Award size={10} />,
       };
     } else if (company.includes("Salesforce") || company.includes("SmartBridge")) {
       return {
-        color: "border-orange-500/20 text-solara-terracotta bg-orange-950/10",
-        pill: "bg-orange-500/10 text-orange-300 border-orange-500/20",
-        glow: "shadow-[0_0_15px_rgba(255,111,89,0.08)]",
+        color: "border-blue-500/20 text-blue-400 bg-blue-950/10",
+        pill: "bg-blue-500/10 text-blue-300 border-blue-500/20",
+        glow: "shadow-[0_0_15px_rgba(59,130,246,0.08)]",
+        badge: "Apex & LWC Superbadges",
+        icon: <Award size={10} />,
+      };
+    } else if (company.includes("Johnson & Johnson") || company.includes("MedTech")) {
+      return {
+        color: "border-purple-500/20 text-purple-400 bg-purple-950/10",
+        pill: "bg-purple-500/10 text-purple-300 border-purple-500/20",
+        glow: "shadow-[0_0_15px_rgba(168,85,247,0.08)]",
+        badge: "Robotics & AWS Architecture",
+        icon: <Network size={10} />,
       };
     } else {
       return {
         color: "border-yellow-600/20 text-yellow-500 bg-yellow-950/10",
         pill: "bg-yellow-500/10 text-yellow-300 border-yellow-500/20",
-        glow: "shadow-[0_0_15px_rgba(202,138,4,0.08)]",
+        badge: "Engineering Track",
+        icon: <Briefcase size={10} />,
       };
     }
   };
@@ -49,14 +79,14 @@ export default function ExperienceSection({ experienceList }: ExperienceProps) {
           PRACTICAL EXPERIENCE
         </h2>
         <p className="text-slate-400 max-w-md text-sm font-light">
-          Practical training, internships, and simulation programs modeling enterprise architecture standards.
+          Industry internships in AI/ML, cybersecurity, enterprise cloud systems, and robotic hardware simulation.
         </p>
       </motion.div>
 
       {/* Timeline list */}
       <div className="relative pl-6 md:pl-8 border-l border-slate-800/80 space-y-12">
         {experienceList.map((exp, idx) => {
-          const brand = getBrandDetails(exp.company);
+          const brand = getBrandDetails(exp.role, exp.company);
 
           return (
             <motion.div
@@ -64,7 +94,7 @@ export default function ExperienceSection({ experienceList }: ExperienceProps) {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: idx * 0.15, duration: 0.6 }}
+              transition={{ delay: idx * 0.12, duration: 0.6 }}
               className="relative"
             >
               {/* Timeline dot node */}
@@ -75,14 +105,14 @@ export default function ExperienceSection({ experienceList }: ExperienceProps) {
               </div>
 
               {/* Main Card */}
-              <div className={`cyber-glass p-6 rounded-xl border ${brand.color} ${brand.glow} hover:bg-slate-900/40 transition duration-300 space-y-4`}>
+              <div className={`cyber-glass p-6 rounded-xl border ${brand.color} ${brand.glow || ""} hover:bg-slate-900/40 transition duration-300 space-y-4`}>
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
                   <div className="space-y-1">
                     <h3 className="text-lg font-display font-bold text-white tracking-wide">
                       {exp.role}
                     </h3>
                     <div className="flex items-center gap-2 text-sm text-slate-400">
-                      <span className="font-semibold">{exp.company}</span>
+                      <span className="font-semibold text-slate-200">{exp.company}</span>
                       <span className="h-3 w-[1px] bg-slate-800"></span>
                       <span className="text-xs font-mono text-slate-500">{exp.location}</span>
                     </div>
@@ -94,18 +124,10 @@ export default function ExperienceSection({ experienceList }: ExperienceProps) {
                       <Calendar size={10} />
                       {exp.period}
                     </span>
-                    {exp.company.includes("Salesforce") && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono bg-blue-950/40 border border-blue-500/20 text-blue-200">
-                        <Award size={10} />
-                        Superbadges
-                      </span>
-                    )}
-                    {exp.company.includes("MedTech") && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono bg-purple-950/40 border border-purple-500/20 text-purple-200">
-                        <Network size={10} />
-                        Python & AWS
-                      </span>
-                    )}
+                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono border ${brand.pill}`}>
+                      {brand.icon}
+                      {brand.badge}
+                    </span>
                   </div>
                 </div>
 

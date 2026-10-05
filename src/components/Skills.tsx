@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Cpu, Code2, Database, ShieldAlert, CloudLightning, ShieldCheck, Award } from "lucide-react";
+import { Cpu, Code2, Database, ShieldAlert, CloudLightning, Wrench } from "lucide-react";
 import { SkillCategory } from "../types";
 
 interface SkillsProps {
@@ -7,35 +7,46 @@ interface SkillsProps {
 }
 
 export default function Skills({ skills }: SkillsProps) {
-  // Map icons to the categories
   const getCategoryIcon = (category: string) => {
     switch (category.toLowerCase()) {
       case "languages":
         return <Code2 className="text-yellow-500" size={18} />;
+      case "frameworks/libs":
       case "frameworks & libraries":
         return <Cpu className="text-orange-400" size={18} />;
       case "databases":
         return <Database className="text-solara-amber" size={18} />;
       case "core domains":
         return <ShieldAlert className="text-solara-terracotta" size={18} />;
+      case "cloud & tools":
+        return <Wrench className="text-amber-500" size={18} />;
       default:
         return <CloudLightning className="text-amber-500" size={18} />;
     }
   };
 
-  // Get custom bar styling & fake but representative skill strength based on CV profile
   const getSkillStrength = (skillName: string) => {
     const name = skillName.toLowerCase();
-    if (name.includes("java")) return { pct: "95%", desc: "Advanced systems architecture & JVM engineering" };
-    if (name.includes("python")) return { pct: "90%", desc: "Surgical robotic optimization & NLP" };
-    if (name.includes("mongodb")) return { pct: "90%", desc: "NoSQL database optimization & indexing" };
-    if (name.includes("react")) return { pct: "85%", desc: "Interactive modern full-stack UI" };
-    if (name.includes("cyber")) return { pct: "85%", desc: "Antigena simulation & defensive logic" };
-    if (name.includes("artificial") || name.includes("nlp") || name.includes("machine")) return { pct: "90%", desc: "Regulatory checker ML models" };
-    if (name.includes("aws")) return { pct: "80%", desc: "Fault-tolerant Beanstalk networks" };
-    if (name.includes("salesforce")) return { pct: "85%", desc: "Developer Champion & LWC Superbadges" };
-    if (name.includes("c/c++") || name.includes("javascript") || name.includes("node")) return { pct: "85%", desc: "Advanced engineering projects" };
-    return { pct: "75%", desc: "Advanced academic coursework" };
+    if (name.includes("java")) return { pct: "95%", desc: "Oracle Certified Professional (Java SE 17) & enterprise systems" };
+    if (name.includes("python")) return { pct: "94%", desc: "AI/ML models, NLP workflows & surgical robotic tracking" };
+    if (name.includes("mongodb")) return { pct: "92%", desc: "MongoDB Certified Associate Developer (Credly verified)" };
+    if (name.includes("artificial intelligence") || name.includes("(ai)")) return { pct: "92%", desc: "AI-driven features & automated risk-mitigation platforms" };
+    if (name.includes("nlp")) return { pct: "90%", desc: "Semantic contract parsing & clause extraction models" };
+    if (name.includes("machine learning") || name.includes("(ml)")) return { pct: "90%", desc: "Predictive model optimization & regulatory audits" };
+    if (name.includes("cyber defense")) return { pct: "92%", desc: "Autonomous threat response simulation & network traffic monitoring" };
+    if (name.includes("aws")) return { pct: "88%", desc: "Fault-tolerant architecture using AWS Elastic Beanstalk" };
+    if (name.includes("salesforce")) return { pct: "88%", desc: "Salesforce Developer Champion | Apex & LWC Superbadges" };
+    if (name.includes("react")) return { pct: "90%", desc: "Interactive dynamic web frontends & 3D visualization" };
+    if (name.includes("node")) return { pct: "88%", desc: "High-performance event-driven REST APIs & services" };
+    if (name.includes("flask")) return { pct: "86%", desc: "Lightweight Python microservices for AI model deployment" };
+    if (name.includes("flutter")) return { pct: "82%", desc: "Cross-platform mobile application development" };
+    if (name.includes("c/c++")) return { pct: "85%", desc: "Core algorithms, data structures & system foundations" };
+    if (name.includes("mysql") || name.includes("sqlite")) return { pct: "88%", desc: "Relational database schema modeling & optimization" };
+    if (name.includes("git")) return { pct: "90%", desc: "Git/GitHub version control & cross-functional workflows" };
+    if (name.includes("figma")) return { pct: "85%", desc: "UI/UX component blueprints & interactive wireframing" };
+    if (name.includes("php")) return { pct: "82%", desc: "Server-side web scripting & database interfacing" };
+    if (name.includes("prolog")) return { pct: "80%", desc: "Logic programming & declarative inference systems" };
+    return { pct: "85%", desc: "Enterprise software engineering practices" };
   };
 
   return (
@@ -54,10 +65,10 @@ export default function Skills({ skills }: SkillsProps) {
           </span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white uppercase tracking-tight">
-          CORE COMPETENCIES
+          TECHNICAL SKILLS
         </h2>
         <p className="text-slate-400 max-w-md text-sm font-light">
-          A granular list of core technical competencies cross-referenced with active projects and enterprise fields.
+          Core technical competencies, programming languages, and toolsets aligned with industry certifications and practical experience.
         </p>
       </motion.div>
 
@@ -70,7 +81,7 @@ export default function Skills({ skills }: SkillsProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: idx * 0.1, duration: 0.6 }}
-            className={`cyber-glass rounded-xl p-6 border border-white/5 space-y-4 shadow-lg hover:border-amber-500/10 hover:shadow-amber-500/5 duration-300 transition ${
+            className={`cyber-glass rounded-xl p-6 border border-white/5 space-y-4 shadow-lg hover:border-amber-500/15 hover:shadow-amber-500/5 duration-300 transition ${
               idx === skills.length - 1 ? "md:col-span-2" : ""
             }`}
           >
@@ -81,7 +92,7 @@ export default function Skills({ skills }: SkillsProps) {
                 {category.category}
               </h3>
               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-                Module {idx + 1}
+                Module 0{idx + 1}
               </span>
             </div>
 
@@ -108,8 +119,8 @@ export default function Skills({ skills }: SkillsProps) {
                       />
                     </div>
 
-                    {/* Explanatory subtitle linking back to portfolio / credentials */}
-                    <p className="text-[10px] text-slate-500 leading-tight block group-hover:text-slate-400 transition-colors">
+                    {/* Explanatory subtitle */}
+                    <p className="text-[10px] text-slate-500 leading-tight block group-hover:text-slate-400 transition-colors font-mono">
                       {strength.desc}
                     </p>
                   </div>

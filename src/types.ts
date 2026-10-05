@@ -7,7 +7,7 @@ export interface Project {
   github?: string;
   category: "AI & ML" | "Cyber & Security" | "Full-Stack";
   tags: string[];
-  threeIconType: "contract" | "shield" | "network" | "globe" | "layout" | "shopping-cart" | "database" | "smartphone";
+  threeIconType: "contract" | "shield" | "globe" | "network" | "layout" | "shopping-cart" | "database" | "smartphone";
   highlights?: string[];
   architectureSteps?: string[];
 }
@@ -33,6 +33,13 @@ export interface Certification {
   authority: string;
 }
 
+export interface EventItem {
+  title: string;
+  date?: string;
+  organizerOrRole?: string;
+  link?: string;
+}
+
 export interface ResumeData {
   name: string;
   title: string;
@@ -46,5 +53,8 @@ export interface ResumeData {
   skills: SkillCategory[];
   certifications?: Certification[];
   awards?: string[];
+  events?: {
+    financeAndTrading?: EventItem[];
+    hackathons: EventItem[];
+  };
 }
-

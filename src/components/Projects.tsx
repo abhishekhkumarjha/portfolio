@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink, ArrowRight, ShieldCheck, Cpu, Code2, AlertTriangle, X, Compass, Radio, Check } from "lucide-react";
+import { ExternalLink, ArrowRight, ShieldCheck, Cpu, Code2, X, Compass, Radio, Check, Github } from "lucide-react";
 import { Project } from "../types";
 
 interface ProjectsProps {
@@ -16,63 +16,48 @@ export default function Projects({
 }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  // Style helper based on indexes
   const getProjectSpecs = (index: number) => {
     switch (index) {
       case 0: // Compliance Checker
         return {
-          accent: "text-yellow-500 border-yellow-500/20 bg-yellow-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(234,179,8,0.1)]",
-          btn: "bg-yellow-500/10 hover:bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
-          desc: "NLP ML regulatory audit analyzer representing a document wireframe.",
+          accent: "border-yellow-500/20 bg-yellow-950/10",
+          glow: "hover:shadow-[0_0_25px_rgba(234,179,8,0.12)]",
+          hologram: "3D CONTRACT SCANNER ACQUIRED",
+          badgeColor: "text-yellow-400 border-yellow-500/30 bg-yellow-950/30",
         };
       case 1: // SecureMind AI
         return {
-          accent: "text-solara-terracotta border-solara-terracotta/20 bg-orange-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(255,111,89,0.1)]",
-          btn: "bg-orange-500/10 hover:bg-orange-500/20 border-orange-500/20 text-orange-200",
-          desc: "Confidentially computed mental health framework inside a secure shield capsule.",
+          accent: "border-solara-terracotta/20 bg-orange-950/10",
+          glow: "hover:shadow-[0_0_25px_rgba(255,111,89,0.12)]",
+          hologram: "3D SHIELDED CAPSULE ACQUIRED",
+          badgeColor: "text-orange-400 border-orange-500/30 bg-orange-950/30",
         };
-      case 2: // Hollow Socks
+      case 2: // Antigena AI Defense System
         return {
-          accent: "text-blue-400 border-blue-500/20 bg-blue-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(96,165,250,0.1)]",
-          btn: "bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/20 text-blue-300",
-          desc: "Custom socks performance product page flow and optimized UI layout.",
+          accent: "border-emerald-500/20 bg-emerald-950/10",
+          glow: "hover:shadow-[0_0_25px_rgba(52,211,153,0.12)]",
+          hologram: "3D AUTONOMOUS DEFENSE ACQUIRED",
+          badgeColor: "text-emerald-400 border-emerald-500/30 bg-emerald-950/30",
         };
-      case 3: // PlumPlay UK
+      case 3: // OceanGuardian Disaster Management System
         return {
-          accent: "text-emerald-400 border-emerald-500/20 bg-emerald-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(52,211,153,0.1)]",
-          btn: "bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300",
-          desc: "Magento performance overhaul, security upgrades, and custom checkout modules.",
-        };
-      case 4: // Dash into Learning
-        return {
-          accent: "text-purple-400 border-purple-500/20 bg-purple-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(192,132,252,0.1)]",
-          btn: "bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/20 text-purple-300",
-          desc: "Shopify brand migration, custom Liquid theme, and optimized checkout flow.",
-        };
-      case 5: // Vitamin H2
-        return {
-          accent: "text-cyan-400 border-cyan-500/20 bg-cyan-950/10",
-          glow: "hover:shadow-[0_0_20px_rgba(34,211,238,0.1)]",
-          btn: "bg-cyan-500/10 hover:bg-cyan-500/20 border-cyan-500/20 text-cyan-300",
-          desc: "Clean mobile-first layout design featuring high-CRO custom catalog filtering.",
+          accent: "border-cyan-500/20 bg-cyan-950/10",
+          glow: "hover:shadow-[0_0_25px_rgba(34,211,238,0.12)]",
+          hologram: "3D GEOSPATIAL RADAR ACQUIRED",
+          badgeColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/30",
         };
       default:
         return {
-          accent: "text-stone-400 border-stone-500/20 bg-stone-900/40",
+          accent: "border-stone-500/20 bg-stone-900/40",
           glow: "",
-          btn: "bg-stone-800 text-stone-200",
-          desc: "",
+          hologram: "3D TELEMETRY ACQUIRED",
+          badgeColor: "text-stone-400 border-stone-500/30",
         };
     }
   };
 
   return (
-    <div className="min-h-screen py-24 px-6 md:px-12 max-w-5xl mx-auto flex flex-col justify-center z-10 relative">
+    <div className="min-h-screen py-24 px-6 md:px-12 max-w-6xl mx-auto flex flex-col justify-center z-10 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -83,18 +68,18 @@ export default function Projects({
         <div className="flex items-center gap-2">
           <span className="h-[1px] w-8 bg-amber-500"></span>
           <span className="text-xs font-mono tracking-[0.25em] text-amber-500 uppercase">
-            Technical Portfolio
+            Technical Architecture
           </span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white uppercase tracking-tight">
-          CORE PROJECTS
+          TECHNICAL PROJECTS
         </h2>
-        <p className="text-slate-400 max-w-md text-sm font-light">
-          Move your cursor over the project grid to engage interactive 3D HUD holograms corresponding to each core architecture.
+        <p className="text-slate-400 max-w-lg text-sm font-light">
+          Engineered AI systems, cyber defense frameworks, and disaster response platforms. Hover to preview real-time 3D telemetry.
         </p>
       </motion.div>
 
-      {/* Grid of Projects */}
+      {/* Grid of Projects (2x2 on desktop) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {projects.map((proj, idx) => {
           const specs = getProjectSpecs(idx);
@@ -111,23 +96,25 @@ export default function Projects({
               onMouseLeave={() => onHoverProject(null)}
               onClick={() => setSelectedProject(proj)}
               className={`cyber-glass rounded-xl p-6 border transition-all duration-300 cursor-pointer flex flex-col justify-between ${specs.accent} ${specs.glow} ${
-                isCurrentHovered ? "bg-slate-900/70 border-white/20 translate-y-[-4px]" : ""
+                isCurrentHovered ? "bg-slate-900/80 border-white/20 translate-y-[-4px]" : ""
               }`}
             >
               <div className="space-y-4">
                 {/* Header indicators */}
                 <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-slate-500 uppercase">{proj.date}</span>
-                  <span className="text-slate-400 uppercase tracking-widest">{proj.category}</span>
+                  <span className="text-slate-400 uppercase font-semibold">{proj.date}</span>
+                  <span className={`text-[10px] uppercase tracking-widest px-2 py-0.5 rounded border ${specs.badgeColor}`}>
+                    {proj.category}
+                  </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-display font-extrabold text-white capitalize tracking-wide group-hover:text-cyan-400">
+                <h3 className="text-lg sm:text-xl font-display font-extrabold text-white leading-snug group-hover:text-amber-400 transition-colors">
                   {proj.title}
                 </h3>
 
-                {/* Short visual summary explaining 3D link */}
-                <p className="text-slate-300 text-sm font-light leading-relaxed">
+                {/* Short visual summary */}
+                <p className="text-slate-300 text-xs sm:text-sm font-light leading-relaxed">
                   {proj.description}
                 </p>
               </div>
@@ -151,14 +138,16 @@ export default function Projects({
                 </div>
 
                 {/* 3D Link Action indicator */}
-                <div className="flex justify-between items-center text-[11px] font-mono pt-1">
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <Radio size={10} className={isCurrentHovered ? "animate-pulse text-amber-500" : ""} />
-                    {isCurrentHovered ? "3D CAMERA TARGET ACQUIRED" : "HOVER TO PREVIEW HUD"}
-                  </span>
-                  <span className="flex items-center gap-1 group text-solara-amber group-hover:text-amber-400">
-                    EXAMINE REPORT <ArrowRight size={12} className="ml-0.5 transition-transform group-hover:translate-x-1" />
-                  </span>
+                <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
+                  <div className="flex items-center justify-between text-[11px] font-mono">
+                    <span className="text-slate-500 flex items-center gap-1.5">
+                      <Radio size={10} className={isCurrentHovered ? "animate-pulse text-amber-500" : ""} />
+                      {isCurrentHovered ? specs.hologram : "HOVER FOR 3D HUD"}
+                    </span>
+                    <span className="flex items-center gap-1 text-solara-amber font-semibold">
+                      DETAILS <ArrowRight size={12} className="ml-0.5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -211,7 +200,7 @@ export default function Projects({
                 {/* Specs bar */}
                 <div className="flex flex-wrap gap-3 pb-4 border-b border-white/5">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-950/50 border border-stone-900/50 text-solara-amber text-xs font-mono">
-                    <Compass size={11} /> Ready in 3D Context
+                    <Compass size={11} /> 3D Telemetry Target
                   </span>
                   {selectedProject.link && (
                     <a
@@ -220,7 +209,17 @@ export default function Projects({
                       rel="noreferrer"
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-amber-950/20 border border-amber-500/30 hover:bg-amber-500/40 text-amber-200 hover:text-white text-xs font-mono transition cursor-pointer"
                     >
-                      <ExternalLink size={11} /> Visit Site
+                      <ExternalLink size={11} /> Live Demo
+                    </a>
+                  )}
+                  {selectedProject.github && (
+                    <a
+                      href={selectedProject.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-900 border border-stone-800 hover:bg-stone-800 text-stone-200 text-xs font-mono transition cursor-pointer"
+                    >
+                      <Github size={11} /> View GitHub Repo
                     </a>
                   )}
                 </div>
@@ -229,7 +228,7 @@ export default function Projects({
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <Cpu size={12} /> Core Summary
+                      <Cpu size={12} /> Overview & Objective
                     </h4>
                     <p className="text-slate-300 text-sm leading-relaxed font-light">
                       {selectedProject.description}
@@ -239,9 +238,9 @@ export default function Projects({
                   {selectedProject.highlights && selectedProject.highlights.length > 0 && (
                     <div className="space-y-2 pt-2">
                       <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                        <Check size={12} className="text-amber-500" /> Highlights & Achievements
+                        <Check size={12} className="text-amber-500" /> Key Technical Achievements
                       </h4>
-                      <ul className="list-disc pl-5 space-y-1 text-slate-300 text-sm font-light">
+                      <ul className="list-disc pl-5 space-y-1.5 text-slate-300 text-sm font-light">
                         {selectedProject.highlights.map((highlight, hIdx) => (
                           <li key={hIdx}>{highlight}</li>
                         ))}
@@ -251,7 +250,7 @@ export default function Projects({
 
                   <div className="space-y-2 pt-2">
                     <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <Code2 size={12} /> Tech Stack & Modules
+                      <Code2 size={12} /> Technology Stack
                     </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {selectedProject.tags.map((tag, tagIndex) => (
@@ -269,7 +268,7 @@ export default function Projects({
                   {selectedProject.architectureSteps && selectedProject.architectureSteps.length > 0 && (
                     <div className="pt-4 mt-2 p-4 rounded-xl bg-[#080605] border border-stone-900 space-y-3 font-mono text-[11px] sm:text-xs">
                       <div className="text-slate-400 uppercase font-semibold text-xs border-b border-stone-900 pb-1.5 flex items-center gap-1">
-                        <ShieldCheck size={12} className="text-amber-500" /> SYSTEM ARCHITECTURE PATTERNS
+                        <ShieldCheck size={12} className="text-amber-500" /> SYSTEM ARCHITECTURE PIPELINE
                       </div>
                       <div className="space-y-1.5 text-slate-300">
                         {selectedProject.architectureSteps.map((step, idx) => {
@@ -300,7 +299,7 @@ export default function Projects({
                     onClick={() => setSelectedProject(null)}
                     className="px-4 py-2 rounded-lg bg-white/5 text-white text-xs font-mono hover:bg-white/10 transition cursor-pointer"
                   >
-                    CLOSE PORTAL REPORT
+                    CLOSE TELEMETRY VIEW
                   </button>
                 </div>
               </div>
@@ -311,4 +310,3 @@ export default function Projects({
     </div>
   );
 }
-
